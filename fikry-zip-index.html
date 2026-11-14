@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>Fikry ZIP — ضغط الملفات</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1220;--panel:#121d30;--panel2:#17243a;--line:#263650;--text:#eef4ff;--muted:#9aabc4;--accent:#6ee7b7;--blue:#7c9cff;--danger:#ff8b8b}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;background:radial-gradient(ellipse at 85% 0%,#1b3150 0,transparent 40%),var(--bg);color:var(--text);min-height:100vh}
+.wrap{width:min(920px,calc(100% - 32px));margin:auto;padding:34px 0 50px}
+header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:34px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#5c8cff);display:grid;place-items:center;color:#071321;font-size:23px}
+.tag{font-size:12px;color:var(--accent);border:1px solid #2b6959;padding:7px 11px;border-radius:30px}
+.hero{text-align:center;margin:0 auto 28px}.hero h1{font-size:clamp(27px,5vw,42px);margin:0 0 10px;letter-spacing:-1px}.hero h1 span{color:var(--accent)}.hero p{color:var(--muted);margin:0;line-height:1.8}
+.card{background:linear-gradient(160deg,#152238,#101a2b);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 18px 55px #0003}
+.drop{border:2px dashed #405675;border-radius:18px;padding:34px 16px;text-align:center;background:#0e192a;transition:.2s;cursor:pointer}.drop.over{border-color:var(--accent);background:#102a2a}.upload-icon{font-size:38px;margin-bottom:8px}.drop h2{font-size:19px;margin:4px 0 7px}.drop p{color:var(--muted);font-size:13px;margin:0 0 16px}
+button,.filepick{border:0;border-radius:12px;padding:12px 18px;font:inherit;font-weight:750;cursor:pointer;transition:.18s}.primary{background:var(--accent);color:#092018}.primary:hover{filter:brightness(1.07);transform:translateY(-1px)}.secondary{background:#23334e;color:var(--text)}button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+input[type=file]{display:none}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:22px 0 12px}.toolbar strong{font-size:15px}.muted{color:var(--muted);font-size:12px}
+.files{display:grid;gap:9px}.empty{border:1px solid var(--line);border-radius:13px;padding:18px;text-align:center;color:var(--muted);font-size:13px}
+.file{display:flex;align-items:center;gap:12px;background:var(--panel2);border:1px solid var(--line);padding:11px 12px;border-radius:13px;min-width:0}.fileicon{width:38px;height:38px;flex:none;border-radius:11px;background:#253957;display:grid;place-items:center;font-size:18px}.fileinfo{min-width:0;flex:1}.filename{font-size:13px;font-weight:650;overflow-wrap:anywhere}.filesize{font-size:11px;color:var(--muted);margin-top:3px}.remove{background:transparent;color:#ff9c9c;padding:7px 10px}
+.settings{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin:19px 0;padding:14px;background:#0e192a;border:1px solid var(--line);border-radius:13px}.settings label{font-size:13px;color:var(--muted)}select{background:#1c2b42;color:var(--text);border:1px solid #344967;border-radius:9px;padding:8px;font:inherit}
+.actions{display:flex;gap:10px;flex-wrap:wrap}.actions button{flex:1;min-width:150px}.status{display:none;margin-top:15px;padding:12px;border-radius:11px;font-size:13px;line-height:1.7}.status.show{display:block}.status.ok{background:#103329;color:#9bf0ce;border:1px solid #28644f}.status.err{background:#351e27;color:#ffb3b3;border:1px solid #75404c}.status.info{background:#172b48;color:#c5d8ff;border:1px solid #35547c}
+.privacy{display:flex;gap:9px;align-items:flex-start;margin-top:18px;color:var(--muted);font-size:12px;line-height:1.7}.privacy b{color:var(--accent)}
+footer{text-align:center;color:#72839c;font-size:12px;margin-top:25px}
+@media(max-width:560px){.wrap{padding-top:22px}.card{padding:14px}.drop{padding:27px 12px}.tag{display:none}.toolbar{align-items:flex-start}.actions{flex-direction:column}.actions button{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="brand"><div class="logo">ZIP</div><div>Fikry <span style="color:var(--accent)">ZIP</span></div></div><div class="tag">مجاني • سريع • خصوصية</div></header>
+<section class="hero"><h1>اضغط ملفاتك <span>بسهولة</span></h1><p>اجمع ملفاتك في ملف ZIP واحد — مباشرة من جهازك، بدون رفعها إلى أي خادم.</p></section>
+<main class="card">
+<div class="drop" id="drop">
+  <div class="upload-icon">📦</div><h2>اسحب الملفات وضعها هنا</h2><p>أو اختار الملفات من جهازك — يمكنك تحديد أكثر من ملف</p>
+  <label class="filepick primary" for="picker">اختيار الملفات</label>
+  <input id="picker" type="file" multiple>
+</div>
+<div class="toolbar"><strong>الملفات المختارة <span id="count" class="muted">(0)</span></strong><button class="secondary" id="clear" disabled>مسح الكل</button></div>
+<div class="files" id="files"><div class="empty">لم تختر أي ملفات حتى الآن</div></div>
+<div class="settings"><label for="level">مستوى الضغط</label><select id="level"><option value="1">سريع (ضغط أقل)</option><option value="6" selected>متوازن — موصى به</option><option value="9">أقصى ضغط (قد يستغرق وقتًا أطول)</option></select></div>
+<div class="actions"><button class="primary" id="compress" disabled>ضغط وتحميل ZIP</button><button class="secondary" id="addMore">إضافة ملفات أخرى</button></div>
+<div id="status" class="status"></div>
+<div class="privacy">🔒 <span><b>خصوصيتك مهمة:</b> تتم معالجة الملفات داخل متصفحك على جهازك. لا يتم إرسال محتويات الملفات إلى موقعنا.</span></div>
+</main>
+<footer>Fikry ZIP © 2026 — صُنع بكل بساطة</footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js"></script>
+<script>
+const picker=document.getElementById('picker'),drop=document.getElementById('drop'),filesEl=document.getElementById('files'),countEl=document.getElementById('count'),compressBtn=document.getElementById('compress'),clearBtn=document.getElementById('clear'),statusEl=document.getElementById('status');
+let selected=[];
+const fmt=n=>{if(n<1024)return n+' بايت';if(n<1048576)return (n/1024).toFixed(1)+' كيلوبايت';return (n/1048576).toFixed(2)+' ميجابايت'};
+function showStatus(msg,type='info'){statusEl.textContent=msg;statusEl.className='status show '+type}
+function addFiles(list){for(const f of list){if(!selected.some(x=>x.name===f.name&&x.size===f.size&&x.lastModified===f.lastModified))selected.push(f)}render()}
+function render(){countEl.textContent='('+selected.length+')';compressBtn.disabled=!selected.length;clearBtn.disabled=!selected.length;
+ if(!selected.length){filesEl.innerHTML='<div class="empty">لم تختر أي ملفات حتى الآن</div>';return}
+ filesEl.innerHTML='';selected.forEach((f,i)=>{const row=document.createElement('div');row.className='file';const icon=document.createElement('div');icon.className='fileicon';icon.textContent='📄';const info=document.createElement('div');info.className='fileinfo';const name=document.createElement('div');name.className='filename';name.textContent=f.name;const size=document.createElement('div');size.className='filesize';size.textContent=fmt(f.size);info.append(name,size);const remove=document.createElement('button');remove.className='remove';remove.textContent='حذف';remove.setAttribute('aria-label','حذف '+f.name);remove.onclick=()=>{selected.splice(i,1);render()};row.append(icon,info,remove);filesEl.append(row)})}
+picker.addEventListener('change',e=>{addFiles(e.target.files);picker.value='';statusEl.className='status'});
+['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over')}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('over')}));
+drop.addEventListener('drop',e=>addFiles(e.dataTransfer.files));
+drop.addEventListener('click',e=>{if(e.target.tagName!=='LABEL')picker.click()});
+document.getElementById('addMore').onclick=()=>picker.click();
+clearBtn.onclick=()=>{selected=[];render();statusEl.className='status'};
+compressBtn.onclick=async()=>{if(!selected.length)return;if(!window.fflate){showStatus('تعذر تحميل مكتبة الضغط. تأكد من اتصال الإنترنت ثم حدّث الصفحة.','err');return}
+ compressBtn.disabled=true;showStatus('جارٍ تجهيز الملفات وضغطها…','info');
+ try{const entries={};for(let i=0;i<selected.length;i++){const f=selected[i];let name=f.name.replace(/^[/\\]+/,'').replace(/\.\.(\/|\\)/g,'');if(!name)name='file-'+(i+1);if(entries[name])name=(i+1)+'-'+name;entries[name]=new Uint8Array(await f.arrayBuffer())}
+ const zipped=fflate.zipSync(entries,{level:Number(document.getElementById('level').value)});
+ const blob=new Blob([zipped],{type:'application/zip'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='fikry-files.zip';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
+ const original=selected.reduce((s,f)=>s+f.size,0);const saved=original?Math.max(0,(1-blob.size/original)*100):0;
+ showStatus('تم إنشاء ملف ZIP بنجاح! الحجم الأصلي: '+fmt(original)+' — حجم الملف المضغوط: '+fmt(blob.size)+' — نسبة تقليل الحجم: '+saved.toFixed(1)+'%.','ok');
+ }catch(err){console.error(err);showStatus('حصل خطأ أثناء الضغط. جرّب ملفات أقل حجمًا أو عددًا.','err')}
+ finally{compressBtn.disabled=!selected.length}
+};
+render();
+</script>
+</body>
+</html>
